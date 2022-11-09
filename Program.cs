@@ -1,4 +1,6 @@
 ﻿using ClientLab.Classes;
+
+
 // CADASTRANDO PF
 PessoaFisica novaPf = new PessoaFisica();
     // ENDERECO PF
@@ -13,13 +15,18 @@ novaPf.DataNascimento ="24/02/1970";
 novaPf.Rendimento = 2000;
 novaPf.Endereco = endPf;
 
+// CRIA VARIÁVEL PARA RECEBER MÉTODOS DA PF
+
+PessoaFisica metodosPf = new PessoaFisica();
+
 // EXIBIR PF
  Console.WriteLine($"*************Pessoa Física************* ");
 
 Console.WriteLine(@$"
 Nome: {novaPf.Nome}
 CPF: {novaPf.Cpf}
-Data Nasc: {novaPf.DataNascimento}
+Data Nascimento: {novaPf.DataNascimento}
+Maior de idade?: {metodosPf.ValidarDataNasc(novaPf.DataNascimento)}
 Endereço: {novaPf.Endereco.Logradouro}
 Número: {novaPf.Endereco.Numero}
 Endereço Comercial: {novaPf.Endereco.IsComercial}
@@ -41,7 +48,6 @@ novaPj.Endereco = endPj;
 novaPj.Rendimento = 100000;
 
 // EXIBIR PJ
-
 Console.WriteLine($"*************Pessoa Jurídica************* ");
 
 Console.WriteLine(@$"
