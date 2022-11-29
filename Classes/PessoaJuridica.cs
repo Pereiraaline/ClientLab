@@ -39,6 +39,21 @@ namespace ClientLab.Classes
             }
 
             return false;
-        } 
+        }
+        public override float PagarImposto(float rendimento)
+        {
+            if (rendimento <= 5000)
+            {
+                return (rendimento - (rendimento / 100) * 6);
+            }
+            else if (rendimento <= 10000)
+            {
+                return (rendimento - (rendimento / 100) * 8);
+            }
+            else
+            {
+                return (rendimento - (rendimento / 100) * 10);
+            }
+        }
     }
 }

@@ -29,7 +29,8 @@ Maior de idade?: {metodosPf.ValidarDataNasc(novaPf.DataNascimento)}
 Endereço: {novaPf.Endereco.Logradouro}
 Número: {novaPf.Endereco.Numero}
 Endereço Comercial: {novaPf.Endereco.IsComercial}
-Rendimento: R$ {novaPf.Rendimento},00
+Rendimento Bruto: R$ {novaPf.Rendimento},00
+Rendimento Liquido: R$ {metodosPf.PagarImposto(novaPf.Rendimento)},00
 ");
 
 // CADASTRAR PJ
@@ -61,5 +62,6 @@ CNPJ é válido? {metodosPj.ValidarCnpj(novaPj.Cnpj)}
 Endereço: {novaPj.Endereco.Logradouro}
 Número: {novaPj.Endereco.Numero}
 Endereço Comercial: {novaPj.Endereco.IsComercial}
-Rendimento: R$ {novaPj.Rendimento},00
+Rendimento Bruto: R$ {novaPj.Rendimento},00
+Rendimento Líquido: R$ {metodosPj.PagarImposto(novaPj.Rendimento)},00
 ");
