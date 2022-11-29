@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientLab.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace ClientLab.Classes
 {
@@ -13,7 +14,31 @@ namespace ClientLab.Classes
 
         public bool ValidarCnpj(string cnpj)
         {
-            throw new NotImplementedException();
-        } // ainda da é necessário criar o método. Está apenas implementado
+            // 55.664.305/0001-90 - 18
+            // 55664305000190 - 14
+
+
+            if (Regex.IsMatch(cnpj, @"^(\d{2}.\d{3}.\d{3}/\d{4}-\d{2})|(\d{14})$"))
+            {
+                //valida se tem o mil contra 0001
+                if (cnpj.Length == 18)
+                {
+                    if (cnpj.Substring(11, 4) == "0001")
+                    {
+                        return true;
+                    }
+                }
+                else if (cnpj.Length == 14)
+                {
+                    if (cnpj.Substring(8, 4) == "0001")
+                    {
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
+        } 
     }
 }

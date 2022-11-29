@@ -1,6 +1,5 @@
 ﻿using ClientLab.Classes;
 
-
 // CADASTRANDO PF
 PessoaFisica novaPf = new PessoaFisica();
     // ENDERECO PF
@@ -20,7 +19,7 @@ novaPf.Endereco = endPf;
 PessoaFisica metodosPf = new PessoaFisica();
 
 // EXIBIR PF
- Console.WriteLine($"*************Pessoa Física************* ");
+ Console.WriteLine($"*************Pessoa Física*************");
 
 Console.WriteLine(@$"
 Nome: {novaPf.Nome}
@@ -35,6 +34,7 @@ Rendimento: R$ {novaPf.Rendimento},00
 
 // CADASTRAR PJ
 PessoaJuridica novaPj = new PessoaJuridica();
+
     // ENDERECO PJ
 Endereco endPj = new Endereco();
 endPj.Logradouro = "Rua da José Bonifácio";
@@ -47,6 +47,9 @@ novaPj.Cnpj = "24.382.463/0001-23";
 novaPj.Endereco = endPj;
 novaPj.Rendimento = 100000;
 
+// CRIA VARIÁVEL PARA RECEBER MÉTODOS DA PF
+PessoaJuridica metodosPj = new PessoaJuridica();
+
 // EXIBIR PJ
 Console.WriteLine($"*************Pessoa Jurídica************* ");
 
@@ -54,10 +57,9 @@ Console.WriteLine(@$"
 Razão Social: {novaPj.RazaoSocial}
 Nome Representante: {novaPj.Nome}
 CNPJ: {novaPj.Cnpj}
+CNPJ é válido? {metodosPj.ValidarCnpj(novaPj.Cnpj)}
 Endereço: {novaPj.Endereco.Logradouro}
 Número: {novaPj.Endereco.Numero}
 Endereço Comercial: {novaPj.Endereco.IsComercial}
 Rendimento: R$ {novaPj.Rendimento},00
 ");
-
-
