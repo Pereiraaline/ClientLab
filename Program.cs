@@ -7,9 +7,6 @@ PessoaFisica metodosPf = new PessoaFisica();
 // CRIA VARIÁVEL PARA RECEBER MÉTODOS DA PF
 PessoaJuridica metodosPj = new PessoaJuridica();
 
-//CRIA LISTA PARA RECEBER PESSOAS CADASTRADAS
-List<PessoaFisica> listaPf = new List<PessoaFisica>();
-List<PessoaJuridica> listaPj = new List<PessoaJuridica>();
 
 // CABEÇALHO DO SISTEMA
 
@@ -77,7 +74,7 @@ do
 ");
 
                 opcaoPf = Console.ReadLine();
-                
+
                 switch (opcaoPf)
                 {
                     case "1":
@@ -93,12 +90,15 @@ do
                         Console.WriteLine($"O endereço é comercial? S/N ");
                         string? endComercial = Console.ReadLine();
 
-                        if(endComercial == "S" || endComercial == "s" || endComercial == "sim"){
+                        if (endComercial == "S" || endComercial == "s" || endComercial == "sim")
+                        {
                             endPf.IsComercial = true;
-                        } else{
+                        }
+                        else
+                        {
                             endPf.IsComercial = false;
                         }
-                        
+
                         // DADOS DA PF
                         Console.WriteLine($"Digite o nome da pessoa física: ");
                         novaPf.Nome = Console.ReadLine();
@@ -112,8 +112,12 @@ do
 
                         novaPf.Endereco = endPf;
 
-                        //ADICIONA NA LISTA DE PESSOAS
-                        listaPf.Add(novaPf);
+                        //ADICIONA NO ARQUIVO TXT DE PESSOAS FÍSICAS
+                    
+                        using (StreamWriter arquivoPf = new StreamWriter("./PessoaFisica.txt", true))
+                        {
+                            arquivoPf.WriteLine($"{novaPf.Nome},{novaPf.Cpf},{novaPf.DataNascimento},{novaPf.Endereco.Logradouro},{novaPf.Endereco.Numero},{novaPf.Endereco.IsComercial},{novaPf.Rendimento}");
+                        }
 
                         Console.WriteLine($"Pessoa Física cadastrada com sucesso!");
                         Util.ParadaNoConsole("Tecle <Enter> para continuar");
@@ -123,24 +127,29 @@ do
                         Console.Clear();
 
                         Console.WriteLine($"******** Início da Lista de Pessoas Físicas********");
-                        foreach (var pessoa in listaPf)
+
+                        //LE OS DADOS NO ARQUIVO TXT DE PESSOAS FÍSICAS
+                        using (StreamReader arquivoPf = new StreamReader("./PessoaFisica.txt"))
                         {
-                                //EXIBIR PF
+                            string? linhaPessoa;
+                            while ((linhaPessoa = arquivoPf.ReadLine()) != null)
+                            {
+                                string[] dadosPessoa = linhaPessoa.Split(",");
                                 Console.WriteLine(@$"
-Nome: {pessoa.Nome}
-CPF: {pessoa.Cpf}
-Data Nascimento: {pessoa.DataNascimento}
-Endereço: {pessoa.Endereco.Logradouro}
-Número: {pessoa.Endereco.Numero}
-Rendimento Bruto: R$ {pessoa.Rendimento},00
-Rendimento Liquido: R$ {metodosPf.PagarImposto(pessoa.Rendimento)},00
+Nome: {dadosPessoa[0]}
+CPF: {dadosPessoa[1]}
+Data Nascimento: {dadosPessoa[2]}
+Endereço: {dadosPessoa[3]}
+Número: {dadosPessoa[4]}
+Rendimento Bruto: R$ {dadosPessoa[6]},00
+Rendimento Liquido: R$ {metodosPf.PagarImposto(float.Parse(dadosPessoa[6]))},00
 ");
 
-Console.WriteLine("Maior de idade ?: " + (metodosPf.ValidarDataNasc(pessoa.DataNascimento) ? "Sim" : "Não"));
-Console.WriteLine("Endereço Comercial: " + (pessoa.Endereco.IsComercial ? "Sim" : "Não"));
-  
-
+                                Console.WriteLine("Maior de idade ?: " + (metodosPf.ValidarDataNasc(dadosPessoa[2]) ? "Sim" : "Não"));
+                                Console.WriteLine("Endereço Comercial: " + (Boolean.Parse(dadosPessoa[5]) ? "Sim" : "Não"));
+                            }
                         }
+
                         Console.WriteLine($"******** Fim da Lista de Pessoas Físicas********");
                         Util.ParadaNoConsole("Tecle <Enter> para continuar");
                         break;
@@ -165,7 +174,6 @@ Console.WriteLine("Endereço Comercial: " + (pessoa.Endereco.IsComercial ? "Sim"
             Util.ParadaNoConsole("Tecle <ENTER> para continuar!");
             Console.Clear();
             break;
-
         case "2":
             Console.Clear();
 
@@ -225,8 +233,13 @@ Console.WriteLine("Endereço Comercial: " + (pessoa.Endereco.IsComercial ? "Sim"
 
                         novaPj.Endereco = endPj;
 
-                        //ADICIONA NA LISTA DE PESSOAS
-                        listaPj.Add(novaPj);
+                        //ADICIONA NO ARQUIVO TXT PESSOAS JURÍDICAS
+
+                        using (StreamWriter arquivoPj = new StreamWriter("./PessoaJuridica.txt", true))
+                        {
+                            arquivoPj.WriteLine($"{novaPj.RazaoSocial},{novaPj.Nome},{novaPj.Cnpj},{novaPj.Endereco.Logradouro},{novaPj.Endereco.Numero},{novaPj.Endereco.IsComercial},{novaPj.Rendimento}");
+                        }
+
 
                         Console.WriteLine($"Pessoa Jurídica cadastrada com sucesso!");
                         Util.ParadaNoConsole("Tecle <Enter> para continuar");
@@ -236,26 +249,28 @@ Console.WriteLine("Endereço Comercial: " + (pessoa.Endereco.IsComercial ? "Sim"
                         Console.Clear();
 
                         Console.WriteLine($"******** Início da Lista de Pessoas Jurídicas ********");
-                        foreach (var pessoa in listaPj)
+                        using (StreamReader arquivoPj = new StreamReader("./PessoaJuridica.txt"))
                         {
-                            //EXIBIR PF
-                            Console.WriteLine(@$"
-Razão Social: {pessoa.RazaoSocial}
-Nome Representante: {pessoa.Nome}
-CNPJ: {pessoa.Cnpj}
-CNPJ é válido? {metodosPj.ValidarCnpj(pessoa.Cnpj)}
-Endereço: {pessoa.Endereco.Logradouro}
-Número: {pessoa.Endereco.Numero}
-Endereço Comercial: {pessoa.Endereco.IsComercial}
-Rendimento Bruto: R$ {pessoa.Rendimento},00
-Rendimento Líquido: R$ {metodosPj.PagarImposto(pessoa.Rendimento)},00
+                            string? linhaPessoa;
+                            while ((linhaPessoa = arquivoPj.ReadLine()) != null)
+                            {
+                                string[] dadosPessoa = linhaPessoa.Split(",");
+                                Console.WriteLine(@$"
+Razão Social: {dadosPessoa[0]}
+Nome Representante: {dadosPessoa[1]}
+CNPJ: {dadosPessoa[2]}
+Endereço: {dadosPessoa[3]}
+Número: {dadosPessoa[4]}
+Rendimento Bruto: R$ {dadosPessoa[6]},00
+Rendimento Líquido: R$ {metodosPj.PagarImposto(float.Parse(dadosPessoa[6]))},00
 ");
 
-                        Console.WriteLine("CNPJ é válido ?: " + (metodosPj.ValidarCnpj(pessoa.Cnpj) ? "Sim" : "Não"));
-                        Console.WriteLine("Endereço Comercial: " + (pessoa.Endereco.IsComercial ? "Sim" : "Não"));
+                                Console.WriteLine("CNPJ é válido ?: " + (metodosPj.ValidarCnpj(dadosPessoa[2]) ? "Sim" : "Não"));
+                                Console.WriteLine("Endereço Comercial: " + (Boolean.Parse(dadosPessoa[5]) ? "Sim" : "Não"));
 
-
+                            }
                         }
+                      
                         Console.WriteLine($"******** Fim da Lista de Pessoas Jurídicas ********");
                         Util.ParadaNoConsole("Tecle <Enter> para continuar");
                         break;
@@ -280,7 +295,7 @@ Rendimento Líquido: R$ {metodosPj.PagarImposto(pessoa.Rendimento)},00
             Util.ParadaNoConsole("Tecle <ENTER> para continuar!");
             Console.Clear();
             break;
-            
+
         default:
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
