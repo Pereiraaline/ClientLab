@@ -24,3 +24,14 @@ Assim, o contrato estabelece que a Troppo realizará a programação de um siste
 
 Para isso, você deverá se atentar às regras estabelecidas, tratando os valores não permitidos inseridos pelos usuários.
 
+### Tecnologias Utilizadas:
+• Linguagem de programação C#;
+
+### Pré-requisitos de instalação:
+• IDE que suporte a linguagem de programação C#;
+
+### Execução da aplicação:
+• Após abrir a pasta do projeto na IDE escolhida digitar o comando 'dotnet run' no terminal;
+• Em seguida escolher um das opções disponíveis no menu principal, sendo opção '1' para acessar o submenu de 'Pessoa Física'  e '2' para acessar o submenu de 'Pessoa Jurídica' ou '0' para sair do sistema;
+• Após acessar o submenu desejado, escolher umas das opções disponíveis de acordo com a necessidade, sendo '1' para cadastrar uma nova pessoa, '2' para listar as pessoas já cadastradas e '0' para retornar ao menu anterior;
+• Para finalizar o sistema basta digitar '0' no menu principal.
